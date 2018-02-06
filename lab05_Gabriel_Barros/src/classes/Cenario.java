@@ -3,7 +3,7 @@ package classes;
 import java.util.ArrayList;
 
 /**
- * Reopresentação de um cenário de aposta
+ * Reopresentaï¿½ï¿½o de um cenï¿½rio de aposta
  * @author Gabriel Barros
  *
  */
@@ -16,9 +16,9 @@ public class Cenario {
 	private int rateio;
 	
 	/**
-	 * Constrói um cenario a partir do numero que o identifica e a sua descrição.
-	 * Todo cenário é iniciado com o seu estado em 0, representando que ainda não foi finalizado
-	 * O caixa e o rateio são inicializados com 0;
+	 * Constrï¿½i um cenario a partir do numero que o identifica e a sua descriï¿½ï¿½o.
+	 * Todo cenï¿½rio ï¿½ iniciado com o seu estado em 0, representando que ainda nï¿½o foi finalizado
+	 * O caixa e o rateio sï¿½o inicializados com 0;
 	 * @param num
 	 * @param descricao
 	 */
@@ -48,14 +48,13 @@ public class Cenario {
 				erradas += apostas.get(i).getValor();
 			}
 		}
-		caixa += (int)erradas * taxa;
-		rateio += erradas - caixa;
+		this.caixa += (int)erradas * taxa;
+		this.rateio += erradas - caixa;
 	}
 	
-
 	/**
-	 * Fecha um cenário. Recebe um estado informando se o cenário ocorreu ou não e a taxa que deve ser retirada de cada aposta perdida no sistema.
-	 * Define o estado do cenário, a quantidade de dinheiro que deve ser encaminhada ao caixa e a quantidade de dinheiro que deve ser repartida entre os vencedores 
+	 * Fecha um cenï¿½rio. Recebe um estado informando se o cenï¿½rio ocorreu ou nï¿½o e a taxa que deve ser retirada de cada aposta perdida no sistema.
+	 * Define o estado do cenï¿½rio, a quantidade de dinheiro que deve ser encaminhada ao caixa e a quantidade de dinheiro que deve ser repartida entre os vencedores 
 	 * @param estado
 	 * @param taxa
 	 */
@@ -69,7 +68,7 @@ public class Cenario {
 	}
 	
 	/**
-	 * Cadastra uma aposta no cenário, recebe o nome do apostador, o valor da aposta e a previsão da mesma
+	 * Cadastra uma aposta no cenï¿½rio, recebe o nome do apostador, o valor da aposta e a previsï¿½o da mesma
 	 * @param apostador
 	 * @param valor
 	 * @param previsao
@@ -79,7 +78,7 @@ public class Cenario {
 	}
 	
 	/**
-	 * Retorna o total de apostas cadastradas no cenário
+	 * Retorna o total de apostas cadastradas no cenï¿½rio
 	 * @return
 	 */
 	public int totalDeApostas() {
@@ -87,7 +86,7 @@ public class Cenario {
 	}
 	
 	/**
-	 * Retorna o valor total apostado no cenário
+	 * Retorna o valor total apostado no cenï¿½rio
 	 * @return
 	 */
 	public int valorTotalDeApostas() {
@@ -99,10 +98,10 @@ public class Cenario {
 	}
 	
 	/**
-	 * Retorna uma representação String de todas as apostas cadastradas:
-	 * 1 - NOME1 - VALOR1 - PREVISÃO1
-	 * 2 - NOME2 - VALOR2 - PREVISÃO2
-	 * 3 - NOME3 - VALOR3 - PREVISÃO3
+	 * Retorna uma representaï¿½ï¿½o String de todas as apostas cadastradas:
+	 * 1 - NOME1 - VALOR1 - PREVISï¿½O1
+	 * 2 - NOME2 - VALOR2 - PREVISï¿½O2
+	 * 3 - NOME3 - VALOR3 - PREVISï¿½O3
 	 * ...
 	 * @return
 	 */
@@ -121,13 +120,36 @@ public class Cenario {
 		return caixa;
 	}
 	
+	public void setCaixa(int valor) {
+		this.caixa += valor;
+	}
+	
 	public int getRateio() {
 		return rateio;
 	}
 	
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+	
+	
+
+	
+	public ArrayList<Aposta> getApostas() {
+		return apostas;
+	}
+
+	public void setApostas(ArrayList<Aposta> apostas) {
+		this.apostas = apostas;
+	}
+
+	public void setRateio(int rateio) {
+		this.rateio = rateio;
+	}
+
 	/**
-	 * Retorna uma represenção String do cenário:
-	 * NUMERAÇÃO - DESCRIÇÃO - ESTADO
+	 * Retorna uma represenï¿½ï¿½o String do cenï¿½rio:
+	 * NUMERAï¿½ï¿½O - DESCRIï¿½ï¿½O - ESTADO
 	 */
 	@Override
 	public String toString() {

@@ -13,7 +13,7 @@ public class CenarioController {
 	private ArrayList<Cenario> cenarios;
 	
 	/**
-	 * Constroi o controller, inicializando o array de cenários
+	 * Constroi o controller, inicializando o array de cenï¿½rios
 	 * @param caixa
 	 * @param taxa
 	 */
@@ -31,7 +31,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Cadastra um cenário a partir de sua descrição
+	 * Cadastra um cenï¿½rio a partir de sua descriï¿½ï¿½o
 	 * @param descricao
 	 */
 	public void cadastrarCenario(String descricao) {
@@ -39,7 +39,15 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Retorna uma representação String de um cenário específico
+	 * Cadastra um cenï¿½rio com bonus a partir de sua descriï¿½ï¿½o e o bonus que ele possui.
+	 * @param descricao
+	 */
+	public void cadastrarCenario(String descricao, int bonus) {
+		cenarios.add(new CenarioBonus((cenarios.size()+1), descricao, bonus));
+	}
+	
+	/**
+	 * Retorna uma representaï¿½ï¿½o String de um cenï¿½rio especï¿½fico
 	 * @param cenario
 	 * @return
 	 */
@@ -49,7 +57,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Retorna uma representação String de todos os cenários cadastrados
+	 * Retorna uma representaï¿½ï¿½o String de todos os cenï¿½rios cadastrados
 	 * @return
 	 */
 	public String exibirCenarios() {
@@ -64,7 +72,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Cadastra uma aposta num cenário específico. Recebe o nome do apostador, o valor da aposta e a previsão da mesma.
+	 * Cadastra uma aposta num cenï¿½rio especï¿½fico. Recebe o nome do apostador, o valor da aposta e a previsï¿½o da mesma.
 	 * @param cenario
 	 * @param apostador
 	 * @param valor
@@ -83,7 +91,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Retorna o número total de apostas cadastradas num cenário específico
+	 * Retorna o nï¿½mero total de apostas cadastradas num cenï¿½rio especï¿½fico
 	 * @param cenario
 	 * @return
 	 */
@@ -93,7 +101,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Retorna o valor total apostado num cenário específico
+	 * Retorna o valor total apostado num cenï¿½rio especï¿½fico
 	 * @param cenario
 	 * @return
 	 */
@@ -103,7 +111,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Exibe todas as apostas de um cenário específico
+	 * Exibe todas as apostas de um cenï¿½rio especï¿½fico
 	 * @param cenario
 	 * @return
 	 */
@@ -112,7 +120,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Fecha um cenário, informando se o mesmo ocorreu ou não
+	 * Fecha um cenï¿½rio, informando se o mesmo ocorreu ou nï¿½o
 	 * @param cenario
 	 * @param ocorreu
 	 */
