@@ -40,11 +40,29 @@ public class Caixa {
 		this.taxa = taxa;
 	}
 	
+	/**
+	 * Adiciona dinheiro ao caixa
+	 * @param dinheiro
+	 */
 	public void adicionarDinheiro(int dinheiro) {
 		if(dinheiro < 0) {
 			throw new IllegalArgumentException("Erro ao adicionar dinheiro: dinheiro n pode ser negativo");
 		}
 		this.dinheiro += dinheiro;
+	}
+	
+	/**
+	 * Retira dinheiro do caixa
+	 * @param dinheiro
+	 */
+	public void retirarDinheiro(int dinheiro) {
+		if(dinheiro < 0) {
+			throw new IllegalArgumentException("Erro ao retirar dinheiro: dinheiro n pode ser negativo");
+		}
+		if(dinheiro > this.dinheiro) {
+			throw new IllegalArgumentException("Erro ao retirar dinheiro: a quantidade de dinheiro n pode ser maior que a quantidade de dinheiro armazenada no caixa");
+		}
+		this.dinheiro -= dinheiro;
 	}
 	
 	

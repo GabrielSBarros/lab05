@@ -59,14 +59,40 @@ public class Facade {
     }
     
     /**
-     * Cadastra uma aposta num cen�rio espec�fico. Recebe o nome do apostador, o valor da aposta e a previs�o da mesma.
+     * Cadastra uma aposta num cenario especifico. Recebe o nome do apostador, o valor da aposta e a previsao da mesma.
      * @param cenario
      * @param apostador
      * @param valor
      * @param previsao
      */
-    public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
-    	cenarioController.cadastrarAposta(cenario, apostador, valor, previsao);
+    public int cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
+    	return cenarioController.cadastrarAposta(cenario, apostador, valor, previsao);
+    }
+    
+    /**
+     * Cadastra uma aposta assegurada por valor num cenario especifico. Recebe o nome do apostador, o valor e a previsao da aposta, o valor e o custo do seguro .
+     * @param cenario
+     * @param apostador
+     * @param valor
+     * @param previsao
+     * @param valorSeguro
+     * @param custo
+     */
+    public int cadastrarApostaSeguraValor(int cenario, String apostador, int valor, String previsao, int valorSeguro, int custo) {
+    	return cenarioController.cadastrarApostaSeguraValor(cenario, apostador, valor, previsao, valorSeguro, custo);
+    }
+    
+    /**
+     * Cadastra uma aposta assegurada por taxa num cenario especifico. Recebe o nome do apostador, o valor e a previsao da aposta, a taxa e o custo do seguro.
+     * @param cenario
+     * @param apostador
+     * @param valor
+     * @param previsao
+     * @param taxa
+     * @param custo
+     */
+    public int cadastrarApostaSeguraTaxa(int cenario, String apostador, int valor, String previsao, double taxa, int custo) {
+    	return cenarioController.cadastrarApostaSeguraTaxa(cenario, apostador, valor, previsao, taxa, custo);
     }
     
 	/**
@@ -97,7 +123,7 @@ public class Facade {
     }
     
     /**
-	 * Fecha um cen�rio, informando se o mesmo ocorreu ou n�o
+	 * Fecha um cenario, informando se o mesmo ocorreu ou nao
 	 * @param cenario
 	 * @param ocorreu
 	 */
@@ -123,8 +149,16 @@ public class Facade {
     	return cenarioController.getTotalRateioCenario(cenario);
     }
     
+    public void alterarSeguroValor(int cenario, int apostaAssegurada, int valor) {
+    	cenarioController.alterarSeguroValor(cenario, apostaAssegurada, valor);
+    }
+    
+   	public void alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa) {
+   		cenarioController.alterarSeguroTaxa(cenario, apostaAssegurada, taxa);
+   	}
+    
     public static void main(String[] args) {
-		args = new String[] {"controllers.Facade", "acceptance_test/us1_test.txt", "acceptance_test/us2_test.txt", "acceptance_test/us3_test.txt", "acceptance_test/us4_test.txt"};
+		args = new String[] {"controllers.Facade", "acceptance_test/us1_test.txt", "acceptance_test/us2_test.txt", "acceptance_test/us3_test.txt", "acceptance_test/us4_test.txt", "acceptance_test/us5_test.txt", "acceptance_test/us6_test.txt"};
 		EasyAccept.main(args);
 	}
 }

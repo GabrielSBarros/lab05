@@ -31,7 +31,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Cadastra um cen�rio a partir de sua descri��o
+	 * Cadastra um cenario a partir de sua descricao
 	 * @param descricao
 	 */
 	public void cadastrarCenario(String descricao) {
@@ -39,15 +39,16 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Cadastra um cen�rio com bonus a partir de sua descri��o e o bonus que ele possui.
+	 * Cadastra um cenario com bonus a partir de sua descricao e o bonus que ele possui.
 	 * @param descricao
 	 */
 	public void cadastrarCenario(String descricao, int bonus) {
 		cenarios.add(new CenarioBonus((cenarios.size()+1), descricao, bonus));
+		caixa.retirarDinheiro(bonus);
 	}
 	
 	/**
-	 * Retorna uma representa��o String de um cen�rio espec�fico
+	 * Retorna uma representacao String de um cenario especifico
 	 * @param cenario
 	 * @return
 	 */
@@ -57,7 +58,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Retorna uma representa��o String de todos os cen�rios cadastrados
+	 * Retorna uma representacao String de todos os cenarios cadastrados
 	 * @return
 	 */
 	public String exibirCenarios() {
@@ -71,27 +72,83 @@ public class CenarioController {
 		return result;
 	}
 	
-	/**
-	 * Cadastra uma aposta num cen�rio espec�fico. Recebe o nome do apostador, o valor da aposta e a previs�o da mesma.
-	 * @param cenario
-	 * @param apostador
-	 * @param valor
-	 * @param previsao
-	 */
-	public void cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
+    /**
+     * Cadastra uma aposta num cenario especifico. Recebe o nome do apostador, o valor da aposta e a previsao da mesma.
+     * @param cenario
+     * @param apostador
+     * @param valor
+     * @param previsao
+     */
+	public int cadastrarAposta(int cenario, String apostador, int valor, String previsao) {
 		verificaCenario(cenario, "Erro no cadastro de aposta: ");
-		if(previsao == null || previsao.trim().equals("")) {
-			throw new IllegalArgumentException("Erro no cadastro de aposta: Previsao nao pode ser vazia ou nula");
+		validaPrevisao(previsao, "Erro no cadastro de aposta: ");		
+		return cenarios.get(cenario - 1).cadastrarAposta(apostador, valor, previsao.equals("VAI ACONTECER"));
+	}
+	
+    /**
+     * Cadastra uma aposta assegurada por valor num cenario especifico. Recebe o nome do apostador, o valor e a previsao da aposta, o valor e o custo do seguro .
+     * @param cenario
+     * @param apostador
+     * @param valor
+     * @param previsao
+     * @param valorSeguro
+     * @param custo
+     */
+	public int cadastrarApostaSeguraValor(int cenario, String apostador, int valor, String previsao, int valorSeguro, int custo) {
+		if(valorSeguro <= 0) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta assegurada por valor: Valor assegurado nao pode ser menor ou igual a zero");
 		}
-		if(!(previsao.equals("VAI ACONTECER") || previsao.equals("N VAI ACONTECER"))) {
-			throw new IllegalArgumentException("Erro no cadastro de aposta: Previsao invalida");
-		}
-		
-		cenarios.get(cenario - 1).cadastrarAposta(apostador, valor, previsao.equals("VAI ACONTECER"));
+		SeguroValor seguro = new SeguroValor(valorSeguro);
+		caixa.adicionarDinheiro(custo);
+		verificaCenario(cenario, "Erro no cadastro de aposta assegurada por valor: ");
+		validaPrevisao(previsao, "Erro no cadastro de aposta assegurada por valor: ");		
+		return cenarios.get(cenario - 1).cadastrarAposta(apostador, valor, previsao.equals("VAI ACONTECER"), seguro);	
 	}
 	
 	/**
-	 * Retorna o n�mero total de apostas cadastradas num cen�rio espec�fico
+     * Cadastra uma aposta assegurada por taxa num cenario especifico. Recebe o nome do apostador, o valor e a previsao da aposta, a taxa e o custo do seguro.
+     * @param cenario
+     * @param apostador
+     * @param valor
+     * @param previsao
+     * @param taxa
+     * @param custo
+     */
+	public int cadastrarApostaSeguraTaxa(int cenario, String apostador, int valor, String previsao, double taxa, int custo) {
+		if(taxa <= 0) {
+			throw new IllegalArgumentException("Erro no cadastro de aposta assegurada por taxa: Taxa assegurada nao pode ser menor ou igual a zero");
+		}
+		SeguroTaxa seguro = new SeguroTaxa(taxa);
+		caixa.adicionarDinheiro(custo);
+		verificaCenario(cenario, "Erro no cadastro de aposta assegurada por taxa: ");
+		validaPrevisao(previsao, "Erro no cadastro de aposta assegurada por taxa: ");	
+		return cenarios.get(cenario - 1).cadastrarAposta(apostador, valor, previsao.equals("VAI ACONTECER"), seguro);	
+	}
+	
+	/**
+	 * Altera o seguro de uma aposta associada a um cenario para seguro por valor
+	 * @param cenario
+	 * @param apostaAssegurada
+	 * @param valor
+	 */
+	public void alterarSeguroValor(int cenario, int apostaAssegurada, int valor) {
+		verificaCenario(cenario - 1, "Erro no cadastro de aposta: ");
+		cenarios.get(cenario - 1).alterarSeguroValor(apostaAssegurada - 1, valor);
+	}
+	
+	/**
+	 * Altera o seguro de uma aposta associada a um cenario para seguro por taxa
+	 * @param cenario
+	 * @param apostaAssegurada
+	 * @param valor
+	 */
+	public void alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa) {
+		verificaCenario(cenario - 1, "Erro no cadastro de aposta: ");
+		cenarios.get(cenario - 1).alterarSeguroTaxa(apostaAssegurada - 1, taxa);
+	}
+	
+	/**
+	 * Retorna o numero total de apostas cadastradas num cenario especifico
 	 * @param cenario
 	 * @return
 	 */
@@ -101,7 +158,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Retorna o valor total apostado num cen�rio espec�fico
+	 * Retorna o valor total apostado num cenario especifico
 	 * @param cenario
 	 * @return
 	 */
@@ -111,7 +168,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Exibe todas as apostas de um cen�rio espec�fico
+	 * Exibe todas as apostas de um cenario especifico
 	 * @param cenario
 	 * @return
 	 */
@@ -120,7 +177,7 @@ public class CenarioController {
 	}
 	
 	/**
-	 * Fecha um cen�rio, informando se o mesmo ocorreu ou n�o
+	 * Fecha um cenario, informando se o mesmo ocorreu ou nao
 	 * @param cenario
 	 * @param ocorreu
 	 */
@@ -129,7 +186,7 @@ public class CenarioController {
 		if(cenarios.get(cenario - 1).getEstado() == 1 || cenarios.get(cenario - 1).getEstado() == 2 ) {
 			throw new IllegalArgumentException("Erro ao fechar aposta: Cenario ja esta fechado");
 		}
-		cenarios.get(cenario - 1).finalizarCenario(ocorreu, caixa.getTaxa());
+		caixa.retirarDinheiro(cenarios.get(cenario - 1).finalizarCenario(ocorreu, caixa.getTaxa()));
 		caixa.adicionarDinheiro(cenarios.get(cenario - 1).getCaixa());
 	}
 	
@@ -165,6 +222,15 @@ public class CenarioController {
 		}
 		if(cenario > cenarios.size()) {
 			throw new IllegalArgumentException(erro + "Cenario nao cadastrado");
+		}
+	}
+	
+	private void validaPrevisao(String previsao, String msg) {
+		if(previsao == null || previsao.trim().equals("")) {
+			throw new IllegalArgumentException(msg + "Previsao nao pode ser vazia ou nula");
+		}
+		if(!(previsao.equals("VAI ACONTECER") || previsao.equals("N VAI ACONTECER"))) {
+			throw new IllegalArgumentException(msg + "Previsao invalida");
 		}
 	}
 }
