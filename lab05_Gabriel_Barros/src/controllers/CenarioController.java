@@ -132,7 +132,7 @@ public class CenarioController {
 	 * @param valor
 	 */
 	public void alterarSeguroValor(int cenario, int apostaAssegurada, int valor) {
-		verificaCenario(cenario - 1, "Erro no cadastro de aposta: ");
+		verificaCenario(cenario, "Erro no cadastro de aposta: ");
 		cenarios.get(cenario - 1).alterarSeguroValor(apostaAssegurada - 1, valor);
 	}
 	
@@ -143,7 +143,7 @@ public class CenarioController {
 	 * @param valor
 	 */
 	public void alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa) {
-		verificaCenario(cenario - 1, "Erro no cadastro de aposta: ");
+		verificaCenario(cenario, "Erro no cadastro de aposta: ");
 		cenarios.get(cenario - 1).alterarSeguroTaxa(apostaAssegurada - 1, taxa);
 	}
 	

@@ -14,6 +14,9 @@ public class SeguroValor extends Seguro {
 	 */
 	public SeguroValor(int valor) {
 		super("valor");
+		if(valor <= 0) {
+			throw new IllegalArgumentException("Erro ao criar seguro por valor: valor nao pode ser menor ou igual a zero");
+		}
 		this.valor = valor;
 	}
 	
@@ -27,6 +30,6 @@ public class SeguroValor extends Seguro {
 	 */
 	@Override
 	public String toString() {
-		return "R$" + (double)(valor * 100);
+		return String.format("R$ %,.2f", (double)(valor / 100));
 	}
 }

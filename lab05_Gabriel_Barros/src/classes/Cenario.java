@@ -93,6 +93,7 @@ public class Cenario {
 		apostas.add(new Aposta(apostador, valor, previsao, seguro));
 		return apostas.size();
 	}
+	
 	/**
 	 * Retorna o total de apostas cadastradas no cen�rio
 	 * @return
@@ -217,7 +218,7 @@ public class Cenario {
 	}
 	
 	private void verificaApostaAssegurada(int aposta, String seguro) {
-		if(!apostas.get(aposta).getSeguro().getTipo().equals(seguro)) {
+		if(apostas.get(aposta).getSeguro().getTipo().equals(seguro)) {
 			throw new IllegalArgumentException("Erro ao mudar o tipo de seguro: Tipo de seguro incompativel");
 		}
 	}

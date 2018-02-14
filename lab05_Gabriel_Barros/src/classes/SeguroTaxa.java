@@ -14,6 +14,12 @@ public class SeguroTaxa extends Seguro{
 	 */
 	public SeguroTaxa(double taxa) {
 		super("taxa");
+		if(taxa <= 0) {
+			throw new IllegalArgumentException("Erro ao criar seguro por taxa: taxa nao pode ser menor ou igual a zero");
+		}
+		if(taxa > 1) {
+			throw new IllegalArgumentException("Erro ao criar seguro por taxa: taxa nao pode ser maior que 100%");
+		}
 		this.taxa = taxa;
 	}
 	
@@ -27,7 +33,7 @@ public class SeguroTaxa extends Seguro{
 	 */
 	@Override
 	public String toString() {
-		return taxa + "%";
+		return (taxa * 100) + "%";
 	}
 
 	/**

@@ -4,7 +4,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 
-class CenarioControllerTest {
+public class CenarioControllerTest {
 	private CenarioController controller;
 	
 	@Test
@@ -14,6 +14,15 @@ class CenarioControllerTest {
 		assertEquals("1 - cenario - Nao finalizado", controller.exibirCenario(1));
 		controller.cadastrarCenario("cenario");
 		assertEquals("2 - cenario - Nao finalizado", controller.exibirCenario(2));
+	}
+	
+	@Test
+	public void testCadastrarCenarioBonus() {
+		controller = new CenarioController(50000, 0.1);
+		controller.cadastrarCenario("cenario", 100);
+		assertEquals("1 - cenario - Nao finalizado - R$ 1,00", controller.exibirCenario(1));
+		controller.cadastrarCenario("cenario", 200);
+		assertEquals("2 - cenario - Nao finalizado - R$ 2,00", controller.exibirCenario(2));
 	}
 	
 	@Test
@@ -35,6 +44,44 @@ class CenarioControllerTest {
 		assertEquals("1 - apostador - 2 - VAI ACONTECER", controller.exibeApostas(1));
 	}
 	
+	@Test
+	public void testCadastrarApostaAsseguradaValor() {
+		controller = new CenarioController(50000, 0.1);
+		controller.cadastrarCenario("cenario");
+		controller.cadastrarApostaSeguraValor(1, "apostador", 2, "VAI ACONTECER", 100, 50);
+		assertEquals("1 - apostador - 2 - VAI ACONTECER - ASSEGURADA(valor) - R$ 1,00", controller.exibeApostas(1));
+		assertEquals(50050, controller.getValorCaixa());
+	}
+	
+	@Test
+	public void testCadastrarApostaAsseguradaTaxa() {
+		controller = new CenarioController(50000, 0.1);
+		controller.cadastrarCenario("cenario");
+		controller.cadastrarApostaSeguraTaxa(1, "apostador", 2, "VAI ACONTECER", 0.3, 50);
+		assertEquals("1 - apostador - 2 - VAI ACONTECER - ASSEGURADA(taxa) - 30.0%", controller.exibeApostas(1));
+		assertEquals(50050, controller.getValorCaixa());
+	}
+	
+	@Test
+	public void testAlterarSeguroValor() {
+		controller = new CenarioController(50000, 0.1);
+		controller.cadastrarCenario("cenario");
+		controller.cadastrarApostaSeguraTaxa(1, "apostador", 2, "VAI ACONTECER", 0.3, 50);
+		assertEquals("1 - apostador - 2 - VAI ACONTECER - ASSEGURADA(taxa) - 30.0%", controller.exibeApostas(1));
+		controller.alterarSeguroValor(1, 1, 100);
+		assertEquals("1 - apostador - 2 - VAI ACONTECER - ASSEGURADA(valor) - R$ 1,00", controller.exibeApostas(1));
+	}
+	
+	@Test
+	public void testAlterarSeguroTaxa() {
+		controller = new CenarioController(50000, 0.1);
+		controller.cadastrarCenario("cenario");
+		controller.cadastrarApostaSeguraValor(1, "apostador", 2, "VAI ACONTECER", 100, 50);
+		assertEquals("1 - apostador - 2 - VAI ACONTECER - ASSEGURADA(valor) - R$ 1,00", controller.exibeApostas(1));
+		controller.alterarSeguroTaxa(1, 1, 0.3);
+		assertEquals("1 - apostador - 2 - VAI ACONTECER - ASSEGURADA(taxa) - 30.0%", controller.exibeApostas(1));
+	}
+		
 	@Test
 	public void testCadastrarApostaApostadorVazio() {
 		controller = new CenarioController(50000, 0.1);

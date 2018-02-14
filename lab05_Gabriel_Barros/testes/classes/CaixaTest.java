@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import classes.Caixa;
 
-class CaixaTest {
+public class CaixaTest {
 	private Caixa caixa;
 
 	@Test
