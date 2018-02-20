@@ -7,7 +7,7 @@ import java.util.ArrayList;
  * @author Gabriel Barros
  *
  */
-public class Cenario {
+public class Cenario implements Comparable<Cenario>{
 	private int num;
 	private String descricao;
 	private int estado;
@@ -208,6 +208,18 @@ public class Cenario {
 		return estado;
 	}
 	
+	public String getDescricao() {
+		return descricao;
+	}
+	
+	public int getNumApostas() {
+		return apostas.size();
+	}
+	
+	public int getNum() {
+		return num;
+	}
+	
 	private void verificaAposta(int aposta, String msg) {
 		if(aposta < 0) {
 			throw new NullPointerException("aposta invalida"); 
@@ -221,5 +233,18 @@ public class Cenario {
 		if(apostas.get(aposta).getSeguro().getTipo().equals(seguro)) {
 			throw new IllegalArgumentException("Erro ao mudar o tipo de seguro: Tipo de seguro incompativel");
 		}
+	}
+
+	/**
+	 * Comparador de cenario baseado na ordem de cadastro
+	 */
+	@Override
+	public int compareTo(Cenario c) {
+		if(this.getNum() < c.getNum()) {
+			return -1;
+		}else if(this.getNum() > c.getNum()) {
+			return 1;
+		}
+		return 0;
 	}
 }

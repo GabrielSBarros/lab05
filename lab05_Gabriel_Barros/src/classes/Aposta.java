@@ -1,6 +1,6 @@
 package classes;
 /**
- * Representação de uma aposta
+ * Representacao de uma aposta
  * @author Gabriel Barros
  *
  */
@@ -11,7 +11,7 @@ public class Aposta {
 	private Seguro seguro;
 	
 	/**
-	 * Contrói uma aposta assegurada a partir do nome do apostador, o valor da aposta e a previsão do cenário em que foi apostado e o seguro.
+	 * Constroi uma aposta assegurada a partir do nome do apostador, o valor da aposta e a previsao do cenario em que foi apostado e o seguro.
 	 * @param nomeApostador
 	 * @param valor
 	 * @param previsao
@@ -81,6 +81,10 @@ public class Aposta {
 		return seguro;
 	}
 	
+	/**
+	 * Retorna o valor da aposta que esta assegurado
+	 * @return
+	 */
 	public int getValorSeguro() {
 		if(this.seguro == null) {
 			return 0;

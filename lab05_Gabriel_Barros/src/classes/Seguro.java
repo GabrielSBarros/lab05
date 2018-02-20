@@ -19,8 +19,16 @@ public abstract class Seguro {
 		return tipo;
 	}
 	
+	/**
+	 * Retorna uma representacao String de um seguro
+	 */
 	@Override
 	public abstract String toString();
 	
+	/**
+	 * Retorna o valor da aposta que foi assegurado
+	 * @param valorAposta
+	 * @return
+	 */
 	public abstract int getValor(int valorAposta);
 }

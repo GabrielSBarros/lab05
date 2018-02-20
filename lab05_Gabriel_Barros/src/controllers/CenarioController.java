@@ -1,6 +1,8 @@
 package controllers;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import classes.*;
 /**
@@ -11,15 +13,17 @@ import classes.*;
 public class CenarioController {
 	private Caixa caixa;
 	private ArrayList<Cenario> cenarios;
+	private Comparator<Cenario> ordemCenarios;
 	
 	/**
-	 * Constroi o controller, inicializando o array de cen�rios
+	 * Constroi o controller, inicializando o array de cenarios
 	 * @param caixa
 	 * @param taxa
 	 */
 	public CenarioController(int caixa, double taxa) {
 		this.cenarios = new ArrayList<>();
 		this.caixa = new Caixa(caixa, taxa);
+		this.ordemCenarios = null;
 	}
 	
 	/**
@@ -216,6 +220,54 @@ public class CenarioController {
 		return cenarios.get(cenario - 1).getRateio();	
 	}
 	
+	/**
+	 * Altera a ordem que os cenarios aparecem:
+	 * cadastro - pela ordem de cadastro
+	 * nome - pela descricao dos cenarios em ordem alfabetica
+	 * apostas - pelo numero de apostas em ordem decrescente
+	 * @param ordem
+	 */
+	public void alterarOrdem(String ordem) {
+		if(ordem == null|| ordem.trim().equals("")) {
+			throw new IllegalArgumentException("Erro ao alterar ordem: Ordem nao pode ser vazia ou nula");
+		}
+   		switch (ordem.toLowerCase()) {
+   		case "cadastro":
+   			ordemCenarios = null;
+   			break;
+   		case "nome":
+   			ordemCenarios = new CenarioComparatorNome();
+   			break;
+   		case "apostas":
+   			ordemCenarios = new CenarioComparatorNumApostas();
+   			break;
+   		default:
+   			throw new IllegalArgumentException("Erro ao alterar ordem: Ordem invalida");
+   		}
+   			
+   	}
+   	
+	/**
+	 * Retorna o toString de um cenario especifico selecionado a partir da posicao no array ordenado
+	 * @param cenario
+	 * @return
+	 */
+   	public String exibirCenarioOrdenado(int cenario) {
+   		verificaCenario(cenario, "Erro na consulta de cenario ordenado: ");
+   		if(ordemCenarios == null) {
+   			return exibirCenario(cenario);
+   		}else {
+   			ArrayList<Cenario> cenariosOrdenados = new ArrayList<>();
+   			for(Cenario c: this.cenarios) {
+   				cenariosOrdenados.add(c);
+   			}
+	   		Collections.sort(cenariosOrdenados, ordemCenarios);
+	   		
+			return cenariosOrdenados.get(cenario - 1).toString();
+   		}
+   		
+   	}
+	
 	private void verificaCenario(int cenario, String erro) {
 		if(cenario < 1) {
 			throw new IllegalArgumentException(erro + "Cenario invalido");
@@ -233,4 +285,6 @@ public class CenarioController {
 			throw new IllegalArgumentException(msg + "Previsao invalida");
 		}
 	}
+	
+
 }

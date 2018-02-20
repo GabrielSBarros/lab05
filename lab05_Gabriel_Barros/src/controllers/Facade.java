@@ -27,7 +27,7 @@ public class Facade {
     }
     
     /**
-	 * Cadastra um cen�rio a partir de sua descri��o
+	 * Cadastra um cenario a partir de sua descricao
 	 * @param descricao
 	 */
     public void cadastrarCenario(String descricao) {
@@ -35,7 +35,7 @@ public class Facade {
     }
     
     /**
-	 * Cadastra um cen�rio com bonus a partir de sua descri��o e o bonus que ele possui
+	 * Cadastra um cenario com bonus a partir de sua descricao e o bonus que ele possui
 	 * @param descricao
 	 */
     public void cadastrarCenario(String descricao, int bonus) {
@@ -43,7 +43,7 @@ public class Facade {
     }
     
     /**
-	 * Retorna uma representa��o String de um cen�rio espec�fico
+	 * Retorna uma representacao String de um cenario especifico
 	 * @param cenario
 	 * @return
 	 */
@@ -51,7 +51,7 @@ public class Facade {
     	return cenarioController.exibirCenario(cenario);
     }
     /**
-	 * Retorna uma representa��o String de todos os cen�rios cadastrados
+	 * Retorna uma representa��o String de todos os cenarios cadastrados
 	 * @return
 	 */
     public String exibirCenarios() {
@@ -96,7 +96,7 @@ public class Facade {
     }
     
 	/**
-	 * Retorna o valor total apostado num cen�rio espec�fico
+	 * Retorna o valor total apostado num cenario especifico
 	 * @param cenario
 	 * @return
 	 */
@@ -105,7 +105,7 @@ public class Facade {
     }
     
     /**
-	 * Retorna o n�mero total de apostas cadastradas num cen�rio espec�fico
+	 * Retorna o n�mero total de apostas cadastradas num cenario especifico
 	 * @param cenario
 	 * @return
 	 */
@@ -114,7 +114,7 @@ public class Facade {
     }
     
     /**
-	 * Exibe todas as apostas de um cen�rio espec�fico
+	 * Exibe todas as apostas de um cenario especifico
 	 * @param cenario
 	 * @return
 	 */
@@ -149,16 +149,36 @@ public class Facade {
     	return cenarioController.getTotalRateioCenario(cenario);
     }
     
+    /**
+     * Altera o tipo de seguro de uma aposta contida em um cenario para seguro por valor
+     * @param cenario
+     * @param apostaAssegurada
+     * @param valor
+     */
     public void alterarSeguroValor(int cenario, int apostaAssegurada, int valor) {
     	cenarioController.alterarSeguroValor(cenario, apostaAssegurada, valor);
     }
     
+    /**
+     * Altera o tipo de seguro de uma aposta contida em um cenario para seguro por taxa
+     * @param cenario
+     * @param apostaAssegurada
+     * @param valor
+     */
    	public void alterarSeguroTaxa(int cenario, int apostaAssegurada, double taxa) {
    		cenarioController.alterarSeguroTaxa(cenario, apostaAssegurada, taxa);
    	}
     
+   	public void alterarOrdem(String ordem) {
+   		cenarioController.alterarOrdem(ordem);
+   	}
+   	
+   	public String exibirCenarioOrdenado(int cenario) {
+   		return cenarioController.exibirCenarioOrdenado(cenario);
+   	}
+   	
     public static void main(String[] args) {
-		args = new String[] {"controllers.Facade", "acceptance_test/us1_test.txt", "acceptance_test/us2_test.txt", "acceptance_test/us3_test.txt", "acceptance_test/us4_test.txt", "acceptance_test/us5_test.txt", "acceptance_test/us6_test.txt"};
+		args = new String[] {"controllers.Facade", "acceptance_test/us1_test.txt", "acceptance_test/us2_test.txt", "acceptance_test/us3_test.txt", "acceptance_test/us4_test.txt", "acceptance_test/us5_test.txt", "acceptance_test/us6_test.txt", "acceptance_test/us7_test.txt"};
 		EasyAccept.main(args);
 	}
 }

@@ -2,7 +2,7 @@ package classes;
 
 /**
  * Representação de um Seguro de apostas baseado em uma taxa do valor apostado
- * @author gabri
+ * @author Gabriel Barros
  *
  */
 public class SeguroTaxa extends Seguro{
